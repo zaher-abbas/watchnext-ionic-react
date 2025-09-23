@@ -11,23 +11,16 @@ import {
     IonToolbar
 } from "@ionic/react";
 import {useEffect, useState} from "react";
-import {getMovieDetails, MovieDetails, TMDB_IMG_BASE} from "../data/MoviesData";
+import {getMovie, Movie, TMDB_IMG_BASE} from "../data/MoviesData";
 
 export default function Detail() {
-    const [movieDetails, setMovieDetail] = useState<MovieDetails | null>();
+
     const [imgBaseURL, setImgBaseURL] = useState(TMDB_IMG_BASE);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [movie_id, setMovie_id] = useState<number |null>(0);
+    const [movie, setMovie] = useState<Movie>();
 
-    useEffect(()=> {
-        getMovieDetails(movie_id).then(res =>
-            setMovieDetail(res)
-        ).catch(error => {
-            setLoading(false);
-            setError(error);
-    });
-    })
+
 
 
     return (
@@ -38,18 +31,18 @@ export default function Detail() {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonImg src={`${imgBaseURL}/w154/${movieDetails?.poster_path}`} alt={movieDetails?.title} />
+                <IonImg src={`${imgBaseURL}/w154/${movie?.backdrop_path}`} alt={movie?.title} />
 
                 <IonGrid>
                     <IonRow>
-                        <IonCol>Movie Title: {movieDetails?.title} </IonCol>
-                        <IonCol>Rating: {movieDetails?.popularity}</IonCol>
+                        <IonCol>Movie Title: {movie?.title} </IonCol>
+                        <IonCol>Rating: {movie?.popularity}</IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol>Movie Description: {movieDetails?.overview}</IonCol>
+                        <IonCol>Movie Description: {movie?.overview}</IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol>Comming Soon: {movieDetails?.release_date}</IonCol>
+                        <IonCol>Coming Soon: {movie?.release_date}</IonCol>
                     </IonRow>
                 </IonGrid>
             </IonContent>

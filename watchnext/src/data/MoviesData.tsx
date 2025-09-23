@@ -20,14 +20,7 @@ export interface MoviesResponse {
     total_results: number;
     dates: { minimum: string; maximum: string };
 }
-export interface MovieDetails {
-    movie_id: number;
-    title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string | null;
-    release_date: string;
-}
+
 const language = 'en-US';
 const API_TEKON= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTg1NDEzZDMyODE2OWRkMWIzZDdhODlkNmRjNjZhMSIsIm5iZiI6MTc1ODU1MTMwMi44NDMwMDAyLCJzdWIiOiI2OGQxNWQwNjU1MmQ2NmJjM2U3YTRiNGEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.-rHmKaU3Pe92r_aZPD6yCAmA0DZExax8zD8VLoTQAhM';
 const TMDB_BASE = "https://api.themoviedb.org/3";
@@ -53,7 +46,7 @@ export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | 
     }
 };
 
-export const getMovieDetails = async (movie_id:number): Promise<MovieDetails |null> => {
+export const getMovie = async (movie_id:number): Promise<Movie |null> => {
     const url = `${TMDB_BASE}/movie/${movie_id}`;
     const options = {
         method: 'GET',
@@ -69,5 +62,6 @@ export const getMovieDetails = async (movie_id:number): Promise<MovieDetails |nu
     catch (error) {
         console.error('Error fetching movie details:', error);
         return null;
+
     }
 };

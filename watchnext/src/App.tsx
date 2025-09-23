@@ -48,10 +48,8 @@ const App: React.FC = () => (
            <Route exact path="/comingsoon">
               <ComingSoon />
             </Route>
-          <Route exact path="/detail">
-              <Detail />
-          </Route>
-        <Route exact path="/">
+          <Route exact path="/detail/:id" component={Detail}/>
+          <Route exact path="/">
           <Redirect to="/home" />
         </Route>
       </IonRouterOutlet>
