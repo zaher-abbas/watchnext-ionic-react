@@ -12,6 +12,7 @@ import {
 } from "@ionic/react";
 import {useEffect, useState} from "react";
 import {getMovie, Movie, TMDB_IMG_BASE} from "../data/MoviesData";
+import {useParams} from "react-router";
 
 export default function Detail() {
 
@@ -19,6 +20,24 @@ export default function Detail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [movie, setMovie] = useState<Movie>();
+    const [response, setResponse] = useState<Movie>();
+    const{movie_id} = useParams<{movie_id:number}>();
+
+    useEffect(() => {
+        const fetchMovie = async () => {
+            try {
+                const response = await getMovie(parseInt(movie_id));
+                setMovie(response);
+            }catch (error) {
+                console.log("Erreur lors de la recuperation du movie",error);
+
+
+            }
+
+        };
+        fetchMovie();
+
+    }, []);
 
 
 
