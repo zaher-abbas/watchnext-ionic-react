@@ -1,0 +1,7 @@
+{
+  "name": "watchnext",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
