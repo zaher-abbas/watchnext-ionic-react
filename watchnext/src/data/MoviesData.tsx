@@ -65,3 +65,4 @@ export const getMovie = async (movie_id:number): Promise<Movie |null> => {
 
     }
 };
+

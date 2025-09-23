@@ -48,7 +48,7 @@ const App: React.FC = () => (
            <Route exact path="/comingsoon">
               <ComingSoon />
             </Route>
-          <Route exact path="/detail/:id" component={Detail}/>
+          <Route exact path="/movie/:movie_id" component={Detail}/>
           <Route exact path="/">
           <Redirect to="/home" />
         </Route>
