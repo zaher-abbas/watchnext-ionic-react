@@ -12,7 +12,7 @@ import './Home.css';
 import {helpCircle, home, personCircle, search} from "ionicons/icons";
 
 const Home: React.FC = () => {
-    return (
+return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -40,8 +40,6 @@ const Home: React.FC = () => {
             </IonFooter>
         </IonPage>
     );
+
 };
-
-
-
 export default Home;
