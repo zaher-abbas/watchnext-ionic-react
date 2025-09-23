@@ -39,8 +39,6 @@ export default function Detail() {
                         <IonCol>Comming Soon:</IonCol>
                     </IonRow>
                 </IonGrid>
-
-
             </IonContent>
         </IonPage>
     )
