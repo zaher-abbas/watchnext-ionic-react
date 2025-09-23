@@ -17,7 +17,7 @@ import React, {useEffect, useState} from "react";
 import {Movie, getUpcomingMovies, MoviesResponse, TMDB_IMG_BASE} from "../data/MoviesData";
 import {chevronBack, chevronForward} from "ionicons/icons";
 
-const Home: React.FC = () => {
+const ComingSoon: React.FC = () => {
     const [movieResponse, setMovieResponse] = useState<MoviesResponse | null>([]);
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
@@ -27,18 +27,6 @@ const Home: React.FC = () => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalResults, setTotalResults] = useState<number>(0);
 
-    useEffect(() => {
-        getUpcomingMovies(1).then(res => {
-                setMovieResponse(res)
-                setMovies(res!.results);
-            setLoading(false);
-            setTotalPages(res!.total_pages);
-            setTotalResults(res!.total_results);
-        }).catch(err => {
-            setLoading(false);
-            setError(err)
-        });
-    }, [])
 
     useEffect(() => {
             getUpcomingMovies(page).then(res => {
@@ -46,10 +34,15 @@ const Home: React.FC = () => {
                 setMovies(res!.results);
                 setLoading(false);
                 setTotalPages(res!.total_pages);
+                setTotalResults(res!.total_results);
             }).catch(err => {
                 setLoading(false);
                 setError(err)
             });
+    }, [page]);
+
+    useEffect(() => {
+        console.log("page:" , page)
     }, [page]);
 
     return (
@@ -115,4 +108,4 @@ const Home: React.FC = () => {
         </IonPage>
     );
 };
-export default Home;
+export default ComingSoon;

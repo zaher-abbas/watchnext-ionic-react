@@ -13,7 +13,6 @@ export interface Movie {
     backdrop_path: string | null;
     video: boolean;
 }
-
 export interface MoviesResponse {
     page: number;
     results: Movie[];
@@ -27,7 +26,6 @@ const API_TEKON= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTg1NDEzZDMyODE2OWRkMWIzZDdhO
 const TMDB_BASE = "https://api.themoviedb.org/3";
 export const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
 
-
 export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | null> => {
     const url = `${TMDB_BASE}/movie/upcoming?language=${language}&page=${page}`;
     const options = {
@@ -37,15 +35,12 @@ export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | 
             Authorization: `Bearer ${API_TEKON}`
         }
     }
-
     try {
         const res = await fetch(url, options)
-        const data: MoviesResponse = await res.json();
-        return data;
+        return await res.json();
 
     } catch (error) {
         console.error('Error fetching upcoming movies:', error);
         return null;
     }
-
 };
