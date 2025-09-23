@@ -20,7 +20,6 @@ export default function Detail() {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-
                 <IonImg
                     src="https://docs-demo.ionic.io/assets/madison.jpg"
                     alt="The Wisconsin State Capitol building in Madison, WI at night"
@@ -35,6 +34,9 @@ export default function Detail() {
                     </IonRow>
                     <IonRow>
                         <IonCol>Movie Description:</IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>Comming Soon:</IonCol>
                     </IonRow>
                 </IonGrid>
 
