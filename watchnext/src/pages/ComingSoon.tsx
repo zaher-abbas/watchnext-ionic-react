@@ -9,7 +9,7 @@ import {
     IonHeader, IonIcon,
     IonImg, IonItem, IonLabel,
     IonPage,
-    IonRow,
+    IonRow, IonText,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -128,8 +128,8 @@ const ComingSoon: React.FC = () => {
                         <IonImg src={`${imgBaseURL}/w154/${movie.poster_path}`} alt={movie.title} />
                         <IonCardHeader>
                             <IonCardTitle>{movie.title}</IonCardTitle>
-                            <IonGrid>
-                                <IonRow>
+                            <IonGrid style={{ width: '100%' }}>
+                                <IonRow className="ion-justify-content-start">
                                     {movie.genre_names && movie.genre_names.map((name, index) => (
                                         <IonCol key={index} size="auto">
                                             <IonBadge color="tertiary">{name}</IonBadge>
@@ -138,7 +138,10 @@ const ComingSoon: React.FC = () => {
                                 </IonRow>
                             </IonGrid>
                             <IonCardSubtitle>
-                                Sortie Le: {movie.release_date ? new Date(movie.release_date).toLocaleDateString() : "N/A"}
+                                Sortie le :
+                                <IonText color="primary" style={{ marginLeft: 6, fontWeight: 600 }}>
+                                    {movie.release_date ? new Date(movie.release_date).toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : 'N/A'}
+                                </IonText>
                             </IonCardSubtitle>
                         </IonCardHeader>
                         <IonCardContent />
