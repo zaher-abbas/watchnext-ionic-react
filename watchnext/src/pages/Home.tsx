@@ -28,22 +28,23 @@ const Home: React.FC = () => {
       </IonHeader>
         <IonFooter>
             <IonToolbar>
-                <IonButton>
-                    <IonIcon slot="icon-only" icon={personCircle}></IonIcon>
-                </IonButton>
-                <IonButton>
+                <div className="ion-align-content-around">
+                    <IonButton >
+                        <IonIcon slot="icon-only" icon={home}></IonIcon>
+                    </IonButton>
+                <IonButton >
                     <IonIcon slot="icon-only" icon={search}></IonIcon>
                 </IonButton>
+
                 <IonButton>
-                    <IonIcon slot="icon-only" icon={home}></IonIcon>
+                    <IonIcon  slot="icon-only" icon={helpCircle}></IonIcon>
                 </IonButton>
-                <IonButton>
-                    <IonIcon slot="icon-only" icon={helpCircle}></IonIcon>
-                </IonButton>
+                </div>
             </IonToolbar>
         </IonFooter>
     </IonPage>
   );
 };
+
 
 export default Home;
