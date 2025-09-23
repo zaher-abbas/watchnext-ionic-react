@@ -33,6 +33,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import ComingSoon from "./pages/ComingSoon";
+import Detail from "./pages/Detail";
+
 
 setupIonicReact();
 
@@ -43,8 +45,11 @@ const App: React.FC = () => (
         <Route exact path="/home">
           <Home />
         </Route>
-          <Route exact path="/comingsoon">
+           <Route exact path="/comingsoon">
               <ComingSoon />
+            </Route>
+          <Route exact path="/detail">
+              <Detail />
           </Route>
         <Route exact path="/">
           <Redirect to="/home" />
