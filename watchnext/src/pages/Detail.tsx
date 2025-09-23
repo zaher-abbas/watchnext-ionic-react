@@ -10,8 +10,26 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/react";
+import {useEffect, useState} from "react";
+import {getMovieDetails, MovieDetails, TMDB_IMG_BASE} from "../data/MoviesData";
 
 export default function Detail() {
+    const [movieDetails, setMovieDetail] = useState<MovieDetails | null>();
+    const [imgBaseURL, setImgBaseURL] = useState(TMDB_IMG_BASE);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [movie_id, setMovie_id] = useState<number |null>(0);
+
+    useEffect(()=> {
+        getMovieDetails(movie_id).then(res =>
+            setMovieDetail(res)
+        ).catch(error => {
+            setLoading(false);
+            setError(error);
+    });
+    })
+
+
     return (
         <IonPage>
             <IonHeader>
@@ -20,26 +38,22 @@ export default function Detail() {
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonImg
-                    src="https://docs-demo.ionic.io/assets/madison.jpg"
-                    alt="The Wisconsin State Capitol building in Madison, WI at night"
-                    style={{width: "100%", height: "auto", margin: "0 auto"}}
-
-                />
+                <IonImg src={`${imgBaseURL}/w154/${movieDetails?.poster_path}`} alt={movieDetails?.title} />
 
                 <IonGrid>
                     <IonRow>
-                        <IonCol>Movie Title: </IonCol>
-                        <IonCol>Rating:</IonCol>
+                        <IonCol>Movie Title: {movieDetails?.title} </IonCol>
+                        <IonCol>Rating: {movieDetails?.popularity}</IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol>Movie Description:</IonCol>
+                        <IonCol>Movie Description: {movieDetails?.overview}</IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol>Comming Soon:</IonCol>
+                        <IonCol>Comming Soon: {movieDetails?.release_date}</IonCol>
                     </IonRow>
                 </IonGrid>
             </IonContent>
         </IonPage>
     )
 }
+
