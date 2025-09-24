@@ -10,7 +10,7 @@ import {
     IonToolbar
 } from "@ionic/react";
 import {useEffect, useState} from "react";
-import {getMovie, Movie, TMDB_IMG_BASE} from "../data/MoviesData";
+import {getMovie, getMovieVideo, Movie, MovieVideo} from "../data/MoviesData";
 import {useParams} from "react-router";
 
 export default function Detail() {
@@ -19,6 +19,7 @@ export default function Detail() {
     const [error, setError] = useState<string | null>(null);
     const {movie_id} = useParams<{ movie_id: string }>();
     const id = Number(movie_id);
+    const [video,setVideo]=useState<MovieVideo[]>([]);
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -44,6 +45,27 @@ export default function Detail() {
         fetchMovie();
     }, [id]);
 
+    useEffect(() => {
+        const fetchVideo=async () => {
+            if(!id) {
+                setError("ID not found.");
+                setLoading(false);
+                return;
+            }
+            try {
+                const data = await getMovieVideo(id);
+                if(data) {
+                    setVideo(data.results)
+                }
+            } catch(err) {
+                console.error("TMDB error", err);
+                setError("error fetching videos");
+            }
+            setLoading(false);
+        };
+        fetchVideo();
+    }, [id]);
+
     return (
         <IonPage>
             <IonHeader>
@@ -57,8 +79,16 @@ export default function Detail() {
                 {movie && !loading && (
                     <IonGrid>
                         <IonRow>
-                            <IonCol> <IonImg src={`${TMDB_IMG_BASE}/w500/${movie.backdrop_path}`}
-                                             alt={movie.title}/></IonCol>
+                            <IonCol>
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={`https://www.youtube.com/embed/${}`}
+
+                                />
+
+
+                            </IonCol>
                         </IonRow>
                         <IonRow>
                             <IonCol>Movie Title: {movie.title}</IonCol>
