@@ -51,7 +51,6 @@ const LANGUAGE = 'fr-FR';
 const API_TEKON= 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTg1NDEzZDMyODE2OWRkMWIzZDdhODlkNmRjNjZhMSIsIm5iZiI6MTc1ODU1MTMwMi44NDMwMDAyLCJzdWIiOiI2OGQxNWQwNjU1MmQ2NmJjM2U3YTRiNGEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.-rHmKaU3Pe92r_aZPD6yCAmA0DZExax8zD8VLoTQAhM';
 const TMDB_BASE = "https://api.themoviedb.org/3";
 export const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
-
 export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | null> => {
     const url = `${TMDB_BASE}/movie/upcoming?language=${LANGUAGE}&page=${page}`;
     const options = {
@@ -93,6 +92,10 @@ export const getMoviesGenresList = async (): Promise<Genre[] | null> => {
 
 export const getMovie = async (movie_id:number): Promise<Movie |null> => {
     const url = `${TMDB_BASE}/movie/${movie_id}?language=${LANGUAGE}`;
+    const url = `${TMDB_BASE}/movie/${movie_id}?language=fr-FR`;
+export const getMoviesGenresList = async (): Promise<Genre[] | null> => {
+    const url = `${TMDB_BASE}/genre/movie/list?language=${language}`;
+
     const options = {
         method: 'GET',
         headers: {
@@ -129,3 +132,14 @@ export const getMovieVideo = async (movie_id:number): Promise<VideosResponse | n
         return null;
     }
 }
+
+
+        const data = await res.json();
+        return data.genres;
+    }
+    catch (error) {
+        console.error('Error fetching movies genres:', error);
+        return null;
+    }
+}
+
