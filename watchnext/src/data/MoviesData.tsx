@@ -110,3 +110,22 @@ export const getMovie = async (movie_id:number): Promise<Movie |null> => {
 
     }
 };
+
+export const getMovieVideo = async (movie_id:number): Promise<VideosResponse | null> => {
+    const url = `${TMDB_BASE}/movie/${movie_id}/videos?language=${LANGUAGE}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${API_TEKON}`
+        }
+    }
+    try {
+        const res = await fetch(url, options)
+        return await res.json();
+    }
+    catch (error) {
+        console.error('Error fetching movie trailer:', error);
+        return null;
+    }
+}

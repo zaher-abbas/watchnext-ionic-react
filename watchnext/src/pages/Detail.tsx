@@ -59,7 +59,7 @@ export default function Detail() {
             if(id === null) {
                 setError("ID not found.");
                 setLoading(false);
-                return;
+                return null;
             }
             try {
                 const data = await getMovieVideo(id);
