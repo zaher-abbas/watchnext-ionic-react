@@ -1,4 +1,5 @@
 import {
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
     IonCol,
     IonContent,
     IonGrid,
@@ -78,10 +79,8 @@ export default function Detail() {
                 {loading && <p>Loading...</p>}
                 {error && <p style={{color: 'red'}}>{error}</p>}
                 {movie && !loading && (
-                    <IonGrid>
-                        <IonRow>
-                            <IonCol>
-                                {video ?(
+                    <IonCard className="align-items: center">
+                        {video ?(
                                     <iframe
                                         width="100%"
                                         height="100%"
@@ -93,22 +92,15 @@ export default function Detail() {
                                     />):
                                     <p>Aucune vidéo disponible</p>
                                 };
-
-
-
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>Movie Title: {movie.title}</IonCol>
-                            <IonCol>Rating: {movie.popularity}</IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>Movie Description: {movie.overview}</IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol>Release Date: {movie.release_date}</IonCol>
-                        </IonRow>
-                    </IonGrid>
+                         <IonCardHeader>
+                            <IonCardTitle> {movie.title}</IonCardTitle>
+                             <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
+                         </IonCardHeader>
+                        <IonCardContent>
+                            Synopsis: {movie.overview}
+                            <IonCardSubtitle color="success">Rating: {movie.popularity} / 100</IonCardSubtitle>
+                        </IonCardContent>
+                    </IonCard>
                 )}
             </IonContent>
         </IonPage>
