@@ -12,7 +12,14 @@ export interface Movie {
     poster_path: string | null;
     backdrop_path: string | null;
     video: boolean;
+    genre_names: string[];
 }
+
+export interface Genre {
+    id: number;
+    name: string;
+}
+
 export interface MoviesResponse {
     page: number;
     results: Movie[];
@@ -44,3 +51,23 @@ export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | 
         return null;
     }
 };
+
+export const getMoviesGenresList = async (): Promise<Genre[] | null> => {
+    const url = `${TMDB_BASE}/genre/movie/list?language=${language}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${API_TEKON}`
+        }
+    }
+    try {
+        const res = await fetch(url, options)
+        const data = await res.json();
+        return data.genres;
+    }
+    catch (error) {
+        console.error('Error fetching movies genres:', error);
+        return null;
+    }
+}
