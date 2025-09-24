@@ -69,7 +69,6 @@ const ComingSoon: React.FC = () => {
 
     }, [movies, genres]);
 
-
     function getMoviesGenresNames(movie: Movie) {
         movie.genre_names = [];
         movie.genre_ids.forEach(id => {

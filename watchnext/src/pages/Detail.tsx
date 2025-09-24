@@ -1,17 +1,14 @@
 import {
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
-    IonCol,
     IonContent,
-    IonGrid,
     IonHeader,
-    IonImg,
-    IonPage, IonRow,
+    IonPage,
 
     IonTitle,
     IonToolbar
 } from "@ionic/react";
 import {useEffect, useState} from "react";
-import {getMovie, getMovieVideo, Movie, MovieVideo, VideosResponse} from "../data/MoviesData";
+import {getMovie, getMovieVideo, Movie, MovieVideo} from "../data/MoviesData";
 import {useParams} from "react-router";
 
 export default function Detail() {
@@ -87,7 +84,7 @@ export default function Detail() {
                 {error && <p style={{color: 'red'}}>{error}</p>}
                 {movie && !loading && (
                     <IonCard style={{ marginTop: "5rem" }} >
-                        {video ?(
+                        {video ?
                                     <iframe
                                         width="100%"
                                         height="315"
@@ -97,18 +94,17 @@ export default function Detail() {
                                         frameBorder="0"
                                         allowFullScreen
                                         style={{borderRadius: "10px"}}
-                                    />):
+                                    /> :
                                     <p>Aucune vidéo disponible</p>
-                                };
+                                }
                          <IonCardHeader style={{padding: "auto"}}>
-                            <IonCardTitle style={{paddingTop: "1rem"}}> {movie.title}</IonCardTitle>
+                            <IonCardTitle style={{marginTop: "0.5rem"}}> {movie.title}</IonCardTitle>
                              <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
                          </IonCardHeader>
                         <IonCardContent color="primary" style={{padding:"auto"}}>
                              Synopsis: {movie.overview}
                             <IonCardSubtitle color="success" style={{paddingTop: "1rem"}}>Rating: {movie.popularity} / 100</IonCardSubtitle>
                         </IonCardContent>
-
                     </IonCard>
                 )}
             </IonContent>
