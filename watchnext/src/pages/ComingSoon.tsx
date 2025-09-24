@@ -24,7 +24,6 @@ import {
     getMoviesGenresList
 } from "../data/MoviesData";
 import {chevronBack, chevronForward} from "ionicons/icons";
-
 const ComingSoon: React.FC = () => {
     const [movieResponse, setMovieResponse] = useState<MoviesResponse | null>([]);
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -103,6 +102,41 @@ const ComingSoon: React.FC = () => {
                 </IonItem>
                     <IonItem lines="none">
                     <IonGrid style={{ width: '100%' }}>
+                        <IonRow className="ion-align-items-center ion-justify-content-center">
+                            <IonCol size="auto">
+                                <IonButton onClick={() => setPage(p => p-1)} disabled={page <= 1}>
+                                    <IonIcon slot="icon-only" icon={chevronBack} />
+                                </IonButton>
+                            </IonCol>
+                            <IonCol size="auto">
+                                <IonLabel className="ion-text-center">Page {page} / {totalPages}</IonLabel>
+                            </IonCol>
+                            <IonCol size="auto">
+                                <IonButton onClick={() => setPage(p => p+1)} disabled={page >= totalPages}>
+                                    <IonIcon slot="icon-only" icon={chevronForward} />
+                                </IonButton>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
+                </IonItem>
+                <IonGrid>
+                    <IonRow>
+                        {movies.map(movie => (
+                            <IonCol size="6" size-sm="12" size-md="6" size-lg="4" size-xl="2" key={movie.id}>
+                                <IonCard  routerLink={`/movie/${movie.id}`}>
+                                    <IonImg src={`${imgBaseURL}/w154/${movie.poster_path}`} alt={movie.title} />
+                                    <IonCardHeader>
+                                        <IonCardTitle>{movie.title}</IonCardTitle>
+                                        <IonCardSubtitle>
+                                            Sortie Le: {movie.release_date ? new Date(movie.release_date).toLocaleDateString() : "N/A"}
+                                        </IonCardSubtitle>
+                                    </IonCardHeader>
+                                    <IonCardContent />
+                                </IonCard>
+                            </IonCol>
+                        ))}
+                    </IonRow>
+                </IonGrid>
                 <IonRow className="ion-align-items-center ion-justify-content-center">
                     <IonCol size="auto">
                         <IonButton onClick={() => setPage(p => p-1)} disabled={page <= 1}>
