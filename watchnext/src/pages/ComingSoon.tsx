@@ -69,15 +69,6 @@ const ComingSoon: React.FC = () => {
 
     }, [movies, genres]);
 
-    function getMoviesGenresNames(movie: Movie) {
-        movie.genre_names = [];
-        movie.genre_ids.forEach(id => {
-            const genre = genres.find(g => g.id === id);
-            if (genre) {
-                movie.genre_names.push(genre.name);
-            }
-        })
-    }
 
     function getMoviesGenresNames(movie: Movie) {
         movie.genre_names = [];
@@ -88,6 +79,7 @@ const ComingSoon: React.FC = () => {
             }
         })
     }
+
     return (
         <IonPage>
             <IonHeader>
@@ -110,31 +102,23 @@ const ComingSoon: React.FC = () => {
                 <IonItem>
                     <IonLabel color="success" className="ion-text-center">{totalResults} movies found</IonLabel>
                 </IonItem>
-                <IonItem lines="none">
-                    <IonGrid style={{width: '100%'}}>
-
-                    <IonItem>
-                    <IonLabel color="success" className="ion-text-center">{totalResults} movies found</IonLabel>
-                </IonItem>
-                    <IonItem lines="none">
-                    <IonGrid style={{ width: '100%' }}>
-                      <IonRow className="ion-align-items-center ion-justify-content-center">
-                            <IonCol size="auto">
-                                <IonButton onClick={() => setPage(p => p - 1)} disabled={page <= 1}>
-                                    <IonIcon slot="icon-only" icon={chevronBack}/>
-                                </IonButton>
-                            </IonCol>
-                            <IonCol size="auto">
-                                <IonLabel className="ion-text-center">Page {page} / {totalPages}</IonLabel>
-                            </IonCol>
-                            <IonCol size="auto">
-                                <IonButton onClick={() => setPage(p => p + 1)} disabled={page >= totalPages}>
-                                    <IonIcon slot="icon-only" icon={chevronForward}/>
-                                </IonButton>
-                            </IonCol>
-                        </IonRow>
-                    </IonGrid>
-                </IonItem>
+                <IonGrid style={{width: '100%'}}>
+                    <IonRow className="ion-align-items-center ion-justify-content-center">
+                        <IonCol size="auto">
+                            <IonButton onClick={() => setPage(p => p - 1)} disabled={page <= 1}>
+                                <IonIcon slot="icon-only" icon={chevronBack}/>
+                            </IonButton>
+                        </IonCol>
+                        <IonCol size="auto">
+                            <IonLabel className="ion-text-center">Page {page} / {totalPages}</IonLabel>
+                        </IonCol>
+                        <IonCol size="auto">
+                            <IonButton onClick={() => setPage(p => p + 1)} disabled={page >= totalPages}>
+                                <IonIcon slot="icon-only" icon={chevronForward}/>
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
                 <IonGrid>
                     {!loading &&
                         <IonRow>
@@ -170,56 +154,8 @@ const ComingSoon: React.FC = () => {
                             ))}
                         </IonRow>}
                 </IonGrid>
-                <IonRow className="ion-align-items-center ion-justify-content-center">
-                    <IonCol size="auto">
-                        <IonButton onClick={() => setPage(p => p-1)} disabled={page <= 1}>
-                            <IonIcon slot="icon-only" icon={chevronBack} />
-                        </IonButton>
-                    </IonCol>
-                    <IonCol size="auto">
-                        <IonLabel className="ion-text-center">Page {page} / {totalPages}</IonLabel>
-                    </IonCol>
-                    <IonCol size="auto">
-                        <IonButton onClick={() => setPage(p => p+1)} disabled={page >= totalPages}>
-                            <IonIcon slot="icon-only" icon={chevronForward} />
-                        </IonButton>
-                    </IonCol>
-                </IonRow>
-            </IonGrid>
-        </IonItem>
-    <IonGrid>
-        {!loading &&
-        <IonRow>
-            {movies.map(movie => (
-                <IonCol size="6" size-sm="12" size-md="6" size-lg="4" size-xl="2" key={movie.id}>
-                    <IonCard>
-                        <IonImg src={`${imgBaseURL}/w154/${movie.poster_path}`} alt={movie.title} />
-                        <IonCardHeader>
-                            <IonCardTitle>{movie.title}</IonCardTitle>
-                            <IonGrid style={{ width: '100%' }} className="ion-no-padding">
-                                <IonRow className="ion-justify-content-start ion-padding-vertical">
-                                    {movie.genre_names && movie.genre_names.map((name, index) => (
-                                        <IonCol key={index} size="auto" className="ion-padding-end">
-                                            <IonBadge color="tertiary">{name}</IonBadge>
-                                        </IonCol>
-                                    ))}
-                                </IonRow>
-                            </IonGrid>
-                            <IonCardSubtitle>
-                                Sortie le :
-                                <IonText color="primary" style={{ marginLeft: 6, fontWeight: 600 }}>
-                                    {movie.release_date ? new Date(movie.release_date).toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : 'N/A'}
-                                </IonText>
-                            </IonCardSubtitle>
-                        </IonCardHeader>
-                        <IonCardContent />
-                    </IonCard>
-                </IonCol>
-            ))}
-        </IonRow>}
-    </IonGrid>
             </IonContent>
         </IonPage>
     );
-};
+}
 export default ComingSoon;
