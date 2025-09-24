@@ -86,27 +86,29 @@ export default function Detail() {
                 {loading && <p>Loading...</p>}
                 {error && <p style={{color: 'red'}}>{error}</p>}
                 {movie && !loading && (
-                    <IonCard className="align-items: center">
+                    <IonCard style={{ marginTop: "5rem" }} >
                         {video ?(
                                     <iframe
                                         width="100%"
-                                        height="100%"
+                                        height="315"
                                         src={`https://www.youtube.com/embed/${video.key}`}
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         title={video.name}
                                         frameBorder="0"
                                         allowFullScreen
+                                        style={{borderRadius: "10px"}}
                                     />):
                                     <p>Aucune vidéo disponible</p>
                                 };
-                         <IonCardHeader>
-                            <IonCardTitle> {movie.title}</IonCardTitle>
+                         <IonCardHeader style={{padding: "auto"}}>
+                            <IonCardTitle style={{paddingTop: "1rem"}}> {movie.title}</IonCardTitle>
                              <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
                          </IonCardHeader>
-                        <IonCardContent>
-                            Synopsis: {movie.overview}
-                            <IonCardSubtitle color="success">Rating: {movie.popularity} / 100</IonCardSubtitle>
+                        <IonCardContent color="primary" style={{padding:"auto"}}>
+                             Synopsis: {movie.overview}
+                            <IonCardSubtitle color="success" style={{paddingTop: "1rem"}}>Rating: {movie.popularity} / 100</IonCardSubtitle>
                         </IonCardContent>
+
                     </IonCard>
                 )}
             </IonContent>
