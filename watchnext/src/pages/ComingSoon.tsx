@@ -50,24 +50,25 @@ const ComingSoon: React.FC = () => {
             setLoading(false);
             setError(err)
         });
+
     }, [page]);
+
+    function getGenres() {
+        getMoviesGenresList()
+            .then(res => {
+                setGenres(res!);
+            }).catch(err => {
+            setError(err);
+        });
+    }
 
     useEffect(() => {
         movies.forEach(movie => {
             getMoviesGenresNames(movie);
         })
         setLoading(false);
-    }, [movies, genres]);
 
-    function getGenres() {
-        getMoviesGenresList()
-            .then(res => {
-                setGenres(res!);
-                console.log("genres:", res);
-            }).catch(err => {
-            setError(err);
-        });
-    }
+    }, [movies, genres]);
 
     function getMoviesGenresNames(movie: Movie) {
         movie.genre_names = [];
@@ -77,9 +78,7 @@ const ComingSoon: React.FC = () => {
                 movie.genre_names.push(genre.name);
             }
         })
-        console.log("movie:", movie);
     }
-
     return (
         <IonPage>
             <IonHeader>
