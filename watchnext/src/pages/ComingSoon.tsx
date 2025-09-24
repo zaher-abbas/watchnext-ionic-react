@@ -37,12 +37,13 @@ const ComingSoon: React.FC = () => {
     const [genres, setGenres] = useState<Genre[]>([]);
 
     useEffect(() => {
-        getUpcomingMovies(page).then(res => {
-            setMovieResponse(res)
-            setMovies(res!.results);
-            setTotalPages(res!.total_pages);
-            setTotalResults(res!.total_results);
-        }).then(() => {
+        getUpcomingMovies(page)
+            .then(res => {
+                setMovieResponse(res)
+                setMovies(res!.results);
+                setTotalPages(res!.total_pages);
+                setTotalResults(res!.total_results);
+            }).then(() => {
                 getGenres();
             }
         ).catch(err => {
@@ -59,10 +60,11 @@ const ComingSoon: React.FC = () => {
     }, [movies, genres]);
 
     function getGenres() {
-        getMoviesGenresList().then(res => {
-            setGenres(res!);
-            console.log("genres:", res);
-        }).catch(err => {
+        getMoviesGenresList()
+            .then(res => {
+                setGenres(res!);
+                console.log("genres:", res);
+            }).catch(err => {
             setError(err);
         });
     }
