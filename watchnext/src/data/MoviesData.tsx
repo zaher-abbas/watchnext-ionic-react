@@ -87,7 +87,6 @@ export const getMovie = async (movie_id:number): Promise<Movie |null> => {
     catch (error) {
         console.error('Error fetching movie details:', error);
         return null;
-
     }
 };
 
@@ -129,5 +128,3 @@ export const getMovieVideo = async (movie_id:number): Promise<VideosResponse | n
         return null;
     }
 }
-    
-
