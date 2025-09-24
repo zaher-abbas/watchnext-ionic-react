@@ -64,7 +64,7 @@ export const getUpcomingMovies = async (page: number): Promise<MoviesResponse | 
 };
 
 export const getMovie = async (movie_id:number): Promise<Movie |null> => {
-    const url = `${TMDB_BASE}/movie/${movie_id}`;
+    const url = `${TMDB_BASE}/movie/${movie_id}?language=fr-FR`;
     const options = {
         method: 'GET',
         headers: {
@@ -84,7 +84,7 @@ export const getMovie = async (movie_id:number): Promise<Movie |null> => {
 };
 
 export const getMovieVideo = async (movie_id:number): Promise<VideosResponse | null> => {
-    const url = `${TMDB_BASE}/movie/${movie_id}/videos`;
+    const url = `${TMDB_BASE}/movie/${movie_id}/videos?language=fr-FR`;
     const options = {
         method: 'GET',
         headers: {
