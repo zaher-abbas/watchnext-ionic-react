@@ -18,17 +18,23 @@ export default function Detail() {
     const [movie, setMovie] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const {movie_id} = useParams<{ movie_id: string }>();
-    const id = Number(movie_id);
+    const {movie_id} = useParams<{ movie_id?: string }>();
     const [video,setVideo]=useState<MovieVideo | null>(null);
+    const [id, setId] = useState<number|null> (null)
 
+    useEffect(() => {
+        if (movie_id) {
+            setId(Number(movie_id));
+        }
+    }, [movie_id])
 
     useEffect(() => {
         const fetchMovie = async () => {
-            if (!id) {
+            setError(null);
+            if (id === null) {
                 setError("ID not found.");
                 setLoading(false);
-                return;
+                return null;
             }
             try {
                 const data = await getMovie(id);
@@ -49,7 +55,8 @@ export default function Detail() {
 
     useEffect(() => {
         const fetchVideo=async () => {
-            if(!id) {
+            setError(null);
+            if(id === null) {
                 setError("ID not found.");
                 setLoading(false);
                 return;
@@ -106,5 +113,6 @@ export default function Detail() {
         </IonPage>
     );
 }
+
 
 
