@@ -10,7 +10,7 @@ import {
     IonToolbar
 } from "@ionic/react";
 import {useEffect, useState} from "react";
-import {getMovie, getMovieVideo, Movie, MovieVideo} from "../data/MoviesData";
+import {getMovie, getMovieVideo, Movie, MovieVideo, VideosResponse} from "../data/MoviesData";
 import {useParams} from "react-router";
 
 export default function Detail() {
@@ -19,7 +19,8 @@ export default function Detail() {
     const [error, setError] = useState<string | null>(null);
     const {movie_id} = useParams<{ movie_id: string }>();
     const id = Number(movie_id);
-    const [video,setVideo]=useState<MovieVideo[]>([]);
+    const [video,setVideo]=useState<MovieVideo | null>(null);
+
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -54,8 +55,8 @@ export default function Detail() {
             }
             try {
                 const data = await getMovieVideo(id);
-                if(data) {
-                    setVideo(data.results)
+                if (data && data.results.length > 0) {
+                    setVideo(data.results[0])
                 }
             } catch(err) {
                 console.error("TMDB error", err);
@@ -80,12 +81,19 @@ export default function Detail() {
                     <IonGrid>
                         <IonRow>
                             <IonCol>
-                                <iframe
-                                    width="100%"
-                                    height="100%"
-                                    src={`https://www.youtube.com/embed/${}`}
+                                {video ?(
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={`https://www.youtube.com/embed/${video.key}`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        title={video.name}
+                                        frameBorder="0"
+                                        allowFullScreen
+                                    />):
+                                    <p>Aucune vidéo disponible</p>
+                                };
 
-                                />
 
 
                             </IonCol>
