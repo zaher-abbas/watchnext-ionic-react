@@ -99,7 +99,7 @@ const ComingSoon: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                     <IonItem>
-                    <IonLabel className="ion-text-center">{totalResults} movies found</IonLabel>
+                    <IonLabel color="success" className="ion-text-center">{totalResults} movies found</IonLabel>
                 </IonItem>
                     <IonItem lines="none">
                     <IonGrid style={{ width: '100%' }}>
@@ -129,10 +129,10 @@ const ComingSoon: React.FC = () => {
                         <IonImg src={`${imgBaseURL}/w154/${movie.poster_path}`} alt={movie.title} />
                         <IonCardHeader>
                             <IonCardTitle>{movie.title}</IonCardTitle>
-                            <IonGrid style={{ width: '100%' }}>
-                                <IonRow className="ion-justify-content-start">
+                            <IonGrid style={{ width: '100%' }} className="ion-no-padding">
+                                <IonRow className="ion-justify-content-start ion-padding-vertical">
                                     {movie.genre_names && movie.genre_names.map((name, index) => (
-                                        <IonCol key={index} size="auto">
+                                        <IonCol key={index} size="auto" className="ion-padding-end">
                                             <IonBadge color="tertiary">{name}</IonBadge>
                                         </IonCol>
                                     ))}
