@@ -103,7 +103,7 @@ const ComingSoon: React.FC = () => {
                 </IonItem>
                     <IonItem lines="none">
                     <IonGrid style={{ width: '100%' }}>
-<<<<<<< HEAD
+
                         <IonRow className="ion-align-items-center ion-justify-content-center">
                             <IonCol size="auto">
                                 <IonButton onClick={() => setPage(p => p-1)} disabled={page <= 1}>
@@ -139,7 +139,7 @@ const ComingSoon: React.FC = () => {
                         ))}
                     </IonRow>
                 </IonGrid>
-=======
+
                 <IonRow className="ion-align-items-center ion-justify-content-center">
                     <IonCol size="auto">
                         <IonButton onClick={() => setPage(p => p-1)} disabled={page <= 1}>
@@ -188,7 +188,7 @@ const ComingSoon: React.FC = () => {
             ))}
         </IonRow>}
     </IonGrid>
->>>>>>> a57fae4a7c6fa8cabdd5f1552e8ac5fd2fdb2a37
+
             </IonContent>
         </IonPage>
     );
