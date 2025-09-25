@@ -1,0 +1,6 @@
+/* place label and select on a single line */
+.inline-year {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
