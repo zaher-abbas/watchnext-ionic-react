@@ -2,15 +2,15 @@ import {
     IonButton,
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
     IonContent,
-    IonHeader, IonImg,
-    IonPage,
-
+    IonHeader, IonIcon, IonImg,
+    IonPage, IonRouterLink,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
 import React, {useEffect, useState} from "react";
 import {getMovie, getMovieVideo, Movie, MovieVideo, TMDB_IMG_BASE} from "../data/MoviesData";
 import {useParams} from "react-router";
+import {chevronBack, heart, logoApple, settingsSharp} from "ionicons/icons";
 
 export default function Detail() {
     const [movie, setMovie] = useState<Movie | null>(null);
@@ -84,6 +84,11 @@ export default function Detail() {
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Description</IonTitle>
+                    <IonRouterLink href={"/comingsoon"}>
+                    <IonButton size="small" >
+                        <IonIcon slot="icon-only" icon={chevronBack}></IonIcon>
+                    </IonButton>
+                    </IonRouterLink>
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
