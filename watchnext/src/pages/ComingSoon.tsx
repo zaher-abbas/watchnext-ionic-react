@@ -78,7 +78,7 @@ const ComingSoon: React.FC = () => {
 
     useEffect(() => {
         if (showFutureOnly) {
-            const newMovies = [...movies].filter(movie => new Date(movie.release_date).getFullYear() >= new Date().getFullYear());
+            const newMovies = [...movies].filter(movie => new Date(movie.release_date) > new Date());
             setMovies(newMovies);
         }
         else
