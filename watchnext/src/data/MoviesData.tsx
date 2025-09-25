@@ -128,3 +128,23 @@ export const getMovieVideo = async (movie_id:number): Promise<VideosResponse | n
         return null;
     }
 }
+
+export const searchUpcomingMovies = async (page: number, query: string, year: string): Promise<MoviesResponse> => {
+    const url = `https://api.themoviedb.org/3/search/movie?language=${LANGUAGE}&page=${page}&query=${query}&year=${year}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTg1NDEzZDMyODE2OWRkMWIzZDdhODlkNmRjNjZhMSIsIm5iZiI6MTc1ODU1MTMwMi44NDMwMDAyLCJzdWIiOiI2OGQxNWQwNjU1MmQ2NmJjM2U3YTRiNGEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.-rHmKaU3Pe92r_aZPD6yCAmA0DZExax8zD8VLoTQAhM'
+        }
+    };
+
+    try {
+        const res = await fetch(url, options);
+        return await res.json();
+    }
+    catch (error) {
+        console.error('Error fetching upcoming movies:', error);
+        throw error;
+    }
+}
