@@ -1,5 +1,10 @@
-.ion-align-content-around {
+.home-content{
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    align-items: center;
+}
+.home-container{
+    text-align: center;
+    color: #9658ca;
+    padding: 20px;
 }
