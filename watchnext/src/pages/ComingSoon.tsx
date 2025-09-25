@@ -90,7 +90,7 @@ const ComingSoon: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if (search)
+        if (search.trim() != "")
             searchMovies(page)
         else
             getMovies(page);
@@ -136,11 +136,13 @@ const ComingSoon: React.FC = () => {
                         <IonButtons slot="start">
                             <IonButton fill="clear" disabled aria-hidden="true" style={{opacity: 0}}> </IonButton>
                         </IonButtons>
-                        <IonTitle size="large" className="ion-text-center ion-padding">Upcoming Movies</IonTitle>
+                        <IonTitle size="large" className="ion-text-center ion-padding" color="primary" style={{ fontWeight: 800, fontSize: '2rem' }}>
+                            Upcoming Movies
+                        </IonTitle>
                         <IonTitle color="success" className="ion-text-center ion-padding">{totalResults} movies found</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonItem className="ion-text-center">
+                <IonItem>
                     <IonGrid>
                         <IonRow className="ion-align-items-center ion-justify-content-center">
                             <IonCol size="auto">
@@ -153,16 +155,18 @@ const ComingSoon: React.FC = () => {
                                 />
                             </IonCol>
                         </IonRow>
-                    </IonGrid>
-                </IonItem>
-            <IonGrid>
-                    <IonRow className="ion-align-items-center ion-justify-content-center" style={{marginTop: "1rem"}}>
+                    <IonRow className="ion-align-items-center ion-justify-content-center">
                         <IonCol size="4">
                     <IonSearchbar
                         placeholder="Filter by movie title"
                         value={search}
                         onIonChange={e => setSearch(e.detail.value!)}
                         color="dark"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                setPage(1);
+                            }}
+                        }
                     />
                         </IonCol>
                         <IonCol size="2">
@@ -184,6 +188,7 @@ const ComingSoon: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+                </IonItem>
 
             <IonGrid style={{width: '100%'}}>
                     <IonRow className="ion-align-items-center ion-justify-content-center">
