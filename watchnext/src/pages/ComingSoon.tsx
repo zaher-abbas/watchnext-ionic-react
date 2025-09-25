@@ -89,7 +89,7 @@ const ComingSoon: React.FC = () => {
         getMovies()
     }, []);
 
-    useEffect(() => {
+   useEffect(() => {
         if (search.trim() != "")
             searchMovies(page)
         else
@@ -122,7 +122,6 @@ const ComingSoon: React.FC = () => {
             }
         })
     }
-
     return (
         <IonPage>
             <IonHeader>
