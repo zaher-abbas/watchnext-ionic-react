@@ -9,7 +9,7 @@ import {
     IonHeader, IonIcon,
     IonImg, IonItem, IonLabel,
     IonPage,
-    IonRow, IonSearchbar, IonSelect, IonSelectOption, IonText,
+    IonRow, IonSearchbar, IonSelect, IonSelectOption, IonSpinner, IonText,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -38,6 +38,7 @@ const ComingSoon: React.FC = () => {
     const [year, setYear] = useState<string>('2025');
 
     function getMovies(pageN: number = 1) {
+        setLoading(true);
         getUpcomingMovies(pageN)
             .then(res => {
                 setMovies(res!.results);
@@ -53,6 +54,7 @@ const ComingSoon: React.FC = () => {
     }
 
     function searchMovies(pageN: number = 1) {
+        setLoading(true);
         searchUpcomingMovies(pageN, search, year).then(
             res => {
                 setLoading(false);
@@ -179,7 +181,18 @@ const ComingSoon: React.FC = () => {
                     </IonRow>
                 </IonGrid>
                 <IonGrid>
-                    {!loading &&
+                    {movies.length === 0 && !loading &&
+                        <IonItem>
+                            <IonTitle color="danger" className="ion-text-center ion-padding">No movies found</IonTitle>
+                        </IonItem>}
+                    {error && <p style={{color: 'red'}}>{error}</p>}
+                    {loading && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', padding: '1rem' }} aria-live="polite">
+                            <IonSpinner name="crescent" />
+                            <IonText>Loading upcoming movies. This may take a moment.</IonText>
+                        </div>
+                    )}
+                    {!loading && movies.length > 0 &&
                         <IonRow>
                             {movies.map(movie => (
                                 <IonCol size="6" size-sm="12" size-md="6" size-lg="4" size-xl="2" key={movie.id}>

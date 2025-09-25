@@ -117,7 +117,7 @@ export default function Detail() {
                                 )}
 
                                 {/* Boutons Player */}
-                                <div style={{ marginTop: "10px" }}>
+                                <div style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
                                     {videoList.map((_, index) => (
                                         <IonButton
                                             key={index}
