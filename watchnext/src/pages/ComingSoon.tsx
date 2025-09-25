@@ -13,7 +13,7 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import './Home.css';
+import './ComingSoon.css';
 import React, {useEffect, useState} from "react";
 import {
     Movie,
@@ -24,6 +24,7 @@ import {
     searchUpcomingMovies
 } from "../data/MoviesData";
 import {chevronBack, chevronForward} from "ionicons/icons";
+
 const ComingSoon: React.FC = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
@@ -35,7 +36,6 @@ const ComingSoon: React.FC = () => {
     const [genres, setGenres] = useState<Genre[]>([]);
     const [search, setSearch] = useState<string>('');
     const [year, setYear] = useState<string>('2025');
-
 
     function getMovies(pageN: number = 1) {
         getUpcomingMovies(pageN)
@@ -59,8 +59,7 @@ const ComingSoon: React.FC = () => {
                 setMovies(res!.results);
                 setTotalPages(res!.total_pages);
                 setTotalResults(res!.total_results);
-            }
-        )
+            })
             .then(
                 () => {
                     getGenres();
@@ -80,7 +79,7 @@ const ComingSoon: React.FC = () => {
 
     useEffect(() => {
         if (search)
-        searchMovies(page)
+            searchMovies(page)
         else
             getMovies(page);
     }, [page, search, year]);
@@ -112,6 +111,7 @@ const ComingSoon: React.FC = () => {
             }
         })
     }
+
     return (
         <IonPage>
             <IonHeader>
@@ -131,31 +131,35 @@ const ComingSoon: React.FC = () => {
                 <IonItem>
                     <IonLabel color="success" className="ion-text-center ion-padding">{totalResults} movies found</IonLabel>
                 </IonItem>
-                <IonToolbar>
+                <IonGrid>
+                    <IonRow className="ion-align-items-center ion-justify-content-center" style={{marginTop: "1rem"}}>
+                        <IonCol size="4">
                     <IonSearchbar
-                        placeholder="Filter by title or genre"
+                        placeholder="Filter by movie title"
                         value={search}
                         onIonChange={e => setSearch(e.detail.value!)}
                         color="dark"
                     />
-                </IonToolbar>
-                <IonToolbar>
-                    <IonLabel style={{marginRight: 8}}>Year</IonLabel>
-                    <IonSelect
-                        value={year}
-                        placeholder="All years"
-                        onIonChange={e => setYear(e.detail.value as string)}
-                        interface="alert"
-                    >
-                        <IonSelectOption value="2025">2025</IonSelectOption>
-                        <IonSelectOption value="2026">2026</IonSelectOption>
-                        <IonSelectOption value="2027">2027</IonSelectOption>
-                        <IonSelectOption value="2028">2028</IonSelectOption>
-                        <IonSelectOption value="2029">2029</IonSelectOption>
-                        <IonSelectOption value="2030">2030</IonSelectOption>
-                    </IonSelect>
-                </IonToolbar>
-
+                        </IonCol>
+                        <IonCol size="2">
+                            <div className="inline-year">
+                                <IonLabel color="primary"  style={{marginRight: 8, fontWeight: 'bold'}}>Year</IonLabel>
+                                <IonSelect
+                                    value={year}
+                                    onIonChange={e => setYear(e.detail.value as string)}
+                                    interface="alert"
+                                >
+                                    <IonSelectOption value="2025">2025</IonSelectOption>
+                                    <IonSelectOption value="2026">2026</IonSelectOption>
+                                    <IonSelectOption value="2027">2027</IonSelectOption>
+                                    <IonSelectOption value="2028">2028</IonSelectOption>
+                                    <IonSelectOption value="2029">2029</IonSelectOption>
+                                    <IonSelectOption value="2030">2030</IonSelectOption>
+                                </IonSelect>
+                            </div>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
 
             <IonGrid style={{width: '100%'}}>
                     <IonRow className="ion-align-items-center ion-justify-content-center">
