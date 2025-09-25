@@ -1,16 +1,16 @@
 import {
     IonButton,
-    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
-    IonContent,
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol,
+    IonContent, IonGrid,
     IonHeader, IonIcon, IonImg,
-    IonPage, IonRouterLink,
+    IonPage, IonRouterLink, IonRow,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
 import React, {useEffect, useState} from "react";
 import {getMovie, getMovieVideo, Movie, MovieVideo, TMDB_IMG_BASE} from "../data/MoviesData";
 import {useParams} from "react-router";
-import {chevronBack, heart, logoApple, settingsSharp} from "ionicons/icons";
+import {chevronBack} from "ionicons/icons";
 
 export default function Detail() {
     const [movie, setMovie] = useState<Movie | null>(null);
@@ -83,12 +83,20 @@ export default function Detail() {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Description</IonTitle>
-                    <IonRouterLink href={"/comingsoon"}>
-                    <IonButton size="small" >
-                        <IonIcon slot="icon-only" icon={chevronBack}></IonIcon>
-                    </IonButton>
-                    </IonRouterLink>
+                    <IonGrid>
+                        <IonRow className="ion-align-items-center ion-justify-content-start">
+                            <IonCol size="auto">
+                                <IonRouterLink href={"/comingsoon"}>
+                                    <IonButton size="small">
+                                        <IonIcon slot="icon-only" icon={chevronBack}></IonIcon>
+                                    </IonButton>
+                                </IonRouterLink>
+                            </IonCol>
+                            <IonCol size="auto">
+                                <IonTitle>Description</IonTitle>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
