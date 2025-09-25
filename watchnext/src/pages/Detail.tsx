@@ -1,14 +1,15 @@
 import {
+    IonButton,
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
     IonContent,
-    IonHeader,
+    IonHeader, IonImg,
     IonPage,
 
     IonTitle,
     IonToolbar
 } from "@ionic/react";
-import {useEffect, useState} from "react";
-import {getMovie, getMovieVideo, Movie, MovieVideo} from "../data/MoviesData";
+import React, {useEffect, useState} from "react";
+import {getMovie, getMovieVideo, Movie, MovieVideo, TMDB_IMG_BASE} from "../data/MoviesData";
 import {useParams} from "react-router";
 
 export default function Detail() {
@@ -16,8 +17,10 @@ export default function Detail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const {movie_id} = useParams<{ movie_id?: string }>();
-    const [video,setVideo]=useState<MovieVideo | null>(null);
-    const [id, setId] = useState<number|null> (null)
+    const [videoList, setVideoList] = useState<MovieVideo[]>([]);
+    const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const [id, setId] = useState<number|null> (null);
+    const [imgBaseURL, setImgBaseURL] = useState(TMDB_IMG_BASE);
 
     useEffect(() => {
         if (movie_id) {
@@ -61,7 +64,11 @@ export default function Detail() {
             try {
                 const data = await getMovieVideo(id);
                 if (data && data.results.length > 0) {
-                    setVideo(data.results[0])
+                    const filteredVideos = data.results.filter(
+                        (vid) => vid.site === "YouTube" || vid.site === "Vimeo"
+                    );
+                    setVideoList(filteredVideos);
+                    setCurrentVideoIndex(0);
                 }
             } catch(err) {
                 console.error("TMDB error", err);
@@ -84,26 +91,57 @@ export default function Detail() {
                 {error && <p style={{color: 'red'}}>{error}</p>}
                 {movie && !loading && (
                     <IonCard style={{ marginTop: "5rem" }} >
-                        {video ?
+                        {videoList.length > 0 && videoList[currentVideoIndex] ? (
+                            <>
+                                {videoList[currentVideoIndex].site === "YouTube" ? (
                                     <iframe
                                         width="100%"
-                                        height="315"
-                                        src={`https://www.youtube.com/embed/${video.key}`}
+                                        height="450"
+                                        src={`https://www.youtube.com/embed/${videoList[currentVideoIndex].key}`}
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        title={video.name}
-                                        frameBorder="0"
+                                        title={videoList[currentVideoIndex].name}
                                         allowFullScreen
-                                        style={{borderRadius: "10px"}}
-                                    /> :
-                                    <p>Aucune vidéo disponible</p>
-                                }
+                                        style={{ borderRadius: "10px" }}
+                                        onError={() => setCurrentVideoIndex((prev) => prev + 1)} // passe à la prochaine vidéo si bloquée
+                                    />
+                                ) : (
+                                    <iframe
+                                        src={`https://player.vimeo.com/video/${videoList[currentVideoIndex].key}`}
+                                        width="100%"
+                                        height="450"
+                                        allow="autoplay; fullscreen; picture-in-picture"
+                                        allowFullScreen
+                                        style={{ borderRadius: "10px" }}
+                                        onError={() => setCurrentVideoIndex((prev) => prev + 1)}
+                                    ></iframe>
+                                )}
+
+                                {/* Boutons Player */}
+                                <div style={{ marginTop: "10px" }}>
+                                    {videoList.map((_, index) => (
+                                        <IonButton
+                                            key={index}
+                                            onClick={() => setCurrentVideoIndex(index)}
+                                           color="primary"
+                                        >
+                                            Player {index + 1}
+                                        </IonButton>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <IonImg
+                                src={`${imgBaseURL}/w342/${movie.poster_path}`}
+                                alt={movie.title}
+                            />
+                        )}
                          <IonCardHeader style={{padding: "auto"}}>
                             <IonCardTitle style={{marginTop: "0.5rem"}}> {movie.title}</IonCardTitle>
                              <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
                          </IonCardHeader>
                         <IonCardContent color="primary" style={{padding:"auto"}}>
                              Synopsis: {movie.overview}
-                            <IonCardSubtitle color="success" style={{paddingTop: "1rem"}}>Rating: {movie.popularity} / 100</IonCardSubtitle>
+                            <IonCardSubtitle color="success" style={{paddingTop: "1rem"}}>Rating: {movie.vote_average.toFixed(0)} / 10</IonCardSubtitle>
                         </IonCardContent>
                     </IonCard>
                 )}
