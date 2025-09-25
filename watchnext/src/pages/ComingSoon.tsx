@@ -2,7 +2,7 @@ import {
     IonBadge,
     IonButton,
     IonButtons,
-    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox,
     IonCol,
     IonContent,
     IonGrid,
@@ -36,6 +36,7 @@ const ComingSoon: React.FC = () => {
     const [genres, setGenres] = useState<Genre[]>([]);
     const [search, setSearch] = useState<string>('');
     const [year, setYear] = useState<string>('2025');
+    const [showFutureOnly, setShowFutureOnly] = useState<boolean>(false);
 
     function getMovies(pageN: number = 1) {
         setLoading(true);
@@ -76,6 +77,15 @@ const ComingSoon: React.FC = () => {
     }
 
     useEffect(() => {
+        if (showFutureOnly) {
+            const newMovies = [...movies].filter(movie => new Date(movie.release_date).getFullYear() >= new Date().getFullYear());
+            setMovies(newMovies);
+        }
+        else
+            getMovies(page);
+    }, [showFutureOnly]);
+
+    useEffect(() => {
         getMovies()
     }, []);
 
@@ -101,8 +111,7 @@ const ComingSoon: React.FC = () => {
             getMoviesGenresNames(movie);
         })
         setLoading(false);
-
-    }, [movies, genres]);
+    }, [genres]);
 
     function getMoviesGenresNames(movie: Movie) {
         movie.genre_names = [];
@@ -128,12 +137,25 @@ const ComingSoon: React.FC = () => {
                             <IonButton fill="clear" disabled aria-hidden="true" style={{opacity: 0}}> </IonButton>
                         </IonButtons>
                         <IonTitle size="large" className="ion-text-center ion-padding">Upcoming Movies</IonTitle>
+                        <IonTitle color="success" className="ion-text-center ion-padding">{totalResults} movies found</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonItem>
-                    <IonLabel color="success" className="ion-text-center ion-padding">{totalResults} movies found</IonLabel>
+                <IonItem className="ion-text-center">
+                    <IonGrid>
+                        <IonRow className="ion-align-items-center ion-justify-content-center">
+                            <IonCol size="auto">
+                                <IonLabel>Future releases Only</IonLabel>
+                            </IonCol>
+                            <IonCol size="auto">
+                                <IonCheckbox
+                                    checked={showFutureOnly}
+                                    onIonChange={e => setShowFutureOnly(e.detail.checked)}
+                                />
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                 </IonItem>
-                <IonGrid>
+            <IonGrid>
                     <IonRow className="ion-align-items-center ion-justify-content-center" style={{marginTop: "1rem"}}>
                         <IonCol size="4">
                     <IonSearchbar
