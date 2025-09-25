@@ -9,7 +9,7 @@ import {
     IonHeader, IonIcon,
     IonImg, IonItem, IonLabel,
     IonPage,
-    IonRow, IonText,
+    IonRow, IonSearchbar, IonSelect, IonSelectOption, IonText,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -18,14 +18,13 @@ import React, {useEffect, useState} from "react";
 import {
     Movie,
     getUpcomingMovies,
-    MoviesResponse,
     TMDB_IMG_BASE,
     Genre,
-    getMoviesGenresList
+    getMoviesGenresList,
+    searchUpcomingMovies
 } from "../data/MoviesData";
 import {chevronBack, chevronForward} from "ionicons/icons";
 const ComingSoon: React.FC = () => {
-    const [movieResponse, setMovieResponse] = useState<MoviesResponse | null>([]);
     const [movies, setMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,11 +33,13 @@ const ComingSoon: React.FC = () => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalResults, setTotalResults] = useState<number>(0);
     const [genres, setGenres] = useState<Genre[]>([]);
+    const [search, setSearch] = useState<string>('');
+    const [year, setYear] = useState<string>('2025');
 
-    useEffect(() => {
-        getUpcomingMovies(page)
+
+    function getMovies(pageN: number = 1) {
+        getUpcomingMovies(pageN)
             .then(res => {
-                setMovieResponse(res)
                 setMovies(res!.results);
                 setTotalPages(res!.total_pages);
                 setTotalResults(res!.total_results);
@@ -49,8 +50,41 @@ const ComingSoon: React.FC = () => {
             setLoading(false);
             setError(err)
         });
+    }
 
-    }, [page]);
+    function searchMovies(pageN: number = 1) {
+        searchUpcomingMovies(pageN, search, year).then(
+            res => {
+                setLoading(false);
+                setMovies(res!.results);
+                setTotalPages(res!.total_pages);
+                setTotalResults(res!.total_results);
+            }
+        )
+            .then(
+                () => {
+                    getGenres();
+                }
+            )
+            .catch(
+                err => {
+                    setLoading(false);
+                    setError(err)
+                }
+            )
+    }
+
+    useEffect(() => {
+        getMovies()
+    }, []);
+
+    useEffect(() => {
+        if (search)
+        searchMovies(page)
+        else
+            getMovies(page);
+    }, [page, search, year]);
+
 
     function getGenres() {
         getMoviesGenresList()
@@ -78,7 +112,6 @@ const ComingSoon: React.FC = () => {
             }
         })
     }
-
     return (
         <IonPage>
             <IonHeader>
@@ -92,16 +125,39 @@ const ComingSoon: React.FC = () => {
                         <IonButtons slot="start">
                             <IonButton fill="clear" disabled aria-hidden="true" style={{opacity: 0}}> </IonButton>
                         </IonButtons>
-                        <IonTitle size="large" className="ion-text-center">Upcoming Movies</IonTitle>
-                        <IonButtons slot="end">
-                            <IonButton fill="clear" disabled aria-hidden="true" style={{opacity: 0}}> </IonButton>
-                        </IonButtons>
+                        <IonTitle size="large" className="ion-text-center ion-padding">Upcoming Movies</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonItem>
-                    <IonLabel color="success" className="ion-text-center">{totalResults} movies found</IonLabel>
+                    <IonLabel color="success" className="ion-text-center ion-padding">{totalResults} movies found</IonLabel>
                 </IonItem>
-                <IonGrid style={{width: '100%'}}>
+                <IonToolbar>
+                    <IonSearchbar
+                        placeholder="Filter by title or genre"
+                        value={search}
+                        onIonChange={e => setSearch(e.detail.value!)}
+                        color="dark"
+                    />
+                </IonToolbar>
+                <IonToolbar>
+                    <IonLabel style={{marginRight: 8}}>Year</IonLabel>
+                    <IonSelect
+                        value={year}
+                        placeholder="All years"
+                        onIonChange={e => setYear(e.detail.value as string)}
+                        interface="alert"
+                    >
+                        <IonSelectOption value="2025">2025</IonSelectOption>
+                        <IonSelectOption value="2026">2026</IonSelectOption>
+                        <IonSelectOption value="2027">2027</IonSelectOption>
+                        <IonSelectOption value="2028">2028</IonSelectOption>
+                        <IonSelectOption value="2029">2029</IonSelectOption>
+                        <IonSelectOption value="2030">2030</IonSelectOption>
+                    </IonSelect>
+                </IonToolbar>
+
+
+            <IonGrid style={{width: '100%'}}>
                     <IonRow className="ion-align-items-center ion-justify-content-center">
                         <IonCol size="auto">
                             <IonButton onClick={() => setPage(p => p - 1)} disabled={page <= 1}>
