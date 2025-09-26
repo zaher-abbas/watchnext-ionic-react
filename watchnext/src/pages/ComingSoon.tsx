@@ -54,6 +54,13 @@ const ComingSoon: React.FC = () => {
         });
     }
 
+    useEffect(() => {
+        if (showFutureOnly) {
+            const newMovies = [...movies].filter(movie => new Date(movie.release_date) > new Date());
+            setMovies(newMovies);
+        }
+    }, [movies]);
+
     function searchMovies(pageN: number = 1) {
         setLoading(true);
         searchUpcomingMovies(pageN, search, year).then(
