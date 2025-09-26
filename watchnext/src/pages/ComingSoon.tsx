@@ -96,7 +96,6 @@ const ComingSoon: React.FC = () => {
             getMovies(page);
     }, [page, search, year]);
 
-
     function getGenres() {
         getMoviesGenresList()
             .then(res => {

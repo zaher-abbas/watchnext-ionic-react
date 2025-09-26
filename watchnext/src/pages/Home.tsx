@@ -1,15 +1,8 @@
 import {
-    IonFooter,
-    IonHeader,
     IonPage,
-    IonSearchbar,
-    IonTitle,
-    IonToolbar,
-    IonIcon,
     IonButton, IonContent, IonImg, IonRouterLink
 } from '@ionic/react';
 import './Home.css';
-import {helpCircle, home, personCircle, search} from "ionicons/icons";
 
 const Home: React.FC = () => {
 return (
@@ -30,8 +23,6 @@ return (
             </div>
         </IonContent>
     </IonPage>
-
     );
-
 };
 export default Home;
