@@ -230,7 +230,7 @@ const ComingSoon: React.FC = () => {
                         <IonRow>
                             {movies.map(movie => (
                                 <IonCol size="6" size-sm="12" size-md="6" size-lg="4" size-xl="2" key={movie.id}>
-                                    <IonCard routerLink={`/movie/${movie.id}`}>
+                                    <IonCard style={{height: '100%'}} routerLink={`/movie/${movie.id}`}>
                                         <IonImg src={`${imgBaseURL}/w154/${movie.poster_path}`} alt={movie.title}/>
                                         <IonCardHeader>
                                             <IonCardTitle>{movie.title}</IonCardTitle>
