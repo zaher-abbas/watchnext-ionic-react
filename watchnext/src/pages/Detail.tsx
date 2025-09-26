@@ -10,9 +10,7 @@ import {
 } from "@ionic/react";
 import React, {useEffect, useState} from "react";
 import {
-    Genre,
     getMovie,
-    getMoviesGenresList,
     getMovieVideo,
     Movie,
     MovieVideo,
