@@ -10,9 +10,7 @@ import {
 } from "@ionic/react";
 import React, {useEffect, useState} from "react";
 import {
-    Genre,
     getMovie,
-    getMoviesGenresList,
     getMovieVideo,
     Movie,
     MovieVideo,
@@ -156,8 +154,8 @@ export default function Detail() {
                                 alt={movie.title}
                             />
                         )}
-                         <IonCardHeader style={{padding: "auto"}}>
-                            <IonCardTitle style={{marginTop: "0.5rem"}}> {movie.title}</IonCardTitle>
+                         <IonCardHeader className="ion-padding-vertical">
+                            <IonCardTitle style={{marginTop: "0.5rem", fontSize: "1.8rem", fontWeight: 700}}> {movie.title}</IonCardTitle>
                              <IonGrid style={{width: '100%'}} className="ion-no-padding">
                                  <IonRow className="ion-justify-content-start ion-padding-vertical">
                                      {movie.genres && movie.genres.map((genre, index) => (
@@ -167,7 +165,7 @@ export default function Detail() {
                                      ))}
                                  </IonRow>
                              </IonGrid>
-                             <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
+                             <IonCardSubtitle color="primary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
                          </IonCardHeader>
                         <IonCardContent color="primary" style={{padding:"auto"}}>
                              Synopsis: {movie.overview}
@@ -179,5 +177,4 @@ export default function Detail() {
         </IonPage>
     );
 }
-
 
