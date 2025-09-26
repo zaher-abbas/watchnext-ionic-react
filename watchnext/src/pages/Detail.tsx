@@ -1,4 +1,5 @@
 import {
+    IonBadge,
     IonButton,
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol,
     IonContent, IonGrid,
@@ -8,7 +9,15 @@ import {
     IonToolbar
 } from "@ionic/react";
 import React, {useEffect, useState} from "react";
-import {getMovie, getMovieVideo, Movie, MovieVideo, TMDB_IMG_BASE} from "../data/MoviesData";
+import {
+    Genre,
+    getMovie,
+    getMoviesGenresList,
+    getMovieVideo,
+    Movie,
+    MovieVideo,
+    TMDB_IMG_BASE
+} from "../data/MoviesData";
 import {useParams} from "react-router";
 import {chevronBack} from "ionicons/icons";
 
@@ -27,6 +36,7 @@ export default function Detail() {
             setId(Number(movie_id));
         }
     }, [movie_id])
+
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -48,7 +58,6 @@ export default function Detail() {
                 setError("error fetching movies");
             }
             setLoading(false);
-
         };
         fetchMovie();
     }, [id]);
@@ -128,7 +137,6 @@ export default function Detail() {
                                         onError={() => setCurrentVideoIndex((prev) => prev + 1)}
                                     ></iframe>
                                 )}
-
                                 {/* Boutons Player */}
                                 <div style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
                                     {videoList.map((_, index) => (
@@ -150,6 +158,15 @@ export default function Detail() {
                         )}
                          <IonCardHeader style={{padding: "auto"}}>
                             <IonCardTitle style={{marginTop: "0.5rem"}}> {movie.title}</IonCardTitle>
+                             <IonGrid style={{width: '100%'}} className="ion-no-padding">
+                                 <IonRow className="ion-justify-content-start ion-padding-vertical">
+                                     {movie.genres && movie.genres.map((genre, index) => (
+                                         <IonCol key={index} size="auto" className="ion-padding-end">
+                                             <IonBadge color="tertiary">{genre.name}</IonBadge>
+                                         </IonCol>
+                                     ))}
+                                 </IonRow>
+                             </IonGrid>
                              <IonCardSubtitle color="tertiary">  Date de sortie: {movie.release_date}</IonCardSubtitle>
                          </IonCardHeader>
                         <IonCardContent color="primary" style={{padding:"auto"}}>
@@ -162,6 +179,5 @@ export default function Detail() {
         </IonPage>
     );
 }
-
 
 
