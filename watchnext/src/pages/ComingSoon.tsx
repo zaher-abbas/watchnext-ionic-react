@@ -81,6 +81,8 @@ const ComingSoon: React.FC = () => {
             const newMovies = [...movies].filter(movie => new Date(movie.release_date) > new Date());
             setMovies(newMovies);
         }
+        else if (search.trim() != "")
+            searchMovies(page)
         else
             getMovies(page);
     }, [showFutureOnly]);
