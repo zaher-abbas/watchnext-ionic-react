@@ -4,7 +4,7 @@ import {
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol,
     IonContent, IonGrid,
     IonHeader, IonIcon, IonImg,
-    IonPage, IonRouterLink, IonRow,
+    IonPage, IonRow,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
@@ -93,11 +93,9 @@ export default function Detail() {
                     <IonGrid>
                         <IonRow className="ion-align-items-center ion-justify-content-start">
                             <IonCol size="auto">
-                                <IonRouterLink href={"/comingsoon"}>
-                                    <IonButton size="small">
+                                    <IonButton routerLink="/comingsoon" size="small">
                                         <IonIcon slot="icon-only" icon={chevronBack}></IonIcon>
                                     </IonButton>
-                                </IonRouterLink>
                             </IonCol>
                             <IonCol size="auto">
                                 <IonTitle>Description</IonTitle>
